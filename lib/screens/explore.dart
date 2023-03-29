@@ -5,6 +5,7 @@ import 'package:online_course/theme/color.dart';
 import 'package:online_course/utils/data.dart';
 
 import '../widgets/category_item.dart';
+import '../widgets/course_item.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key}) : super(key: key);
@@ -48,82 +49,38 @@ class _ExplorePageState extends State<ExplorePage> {
   }
 
   getCourses() {
-    return SliverChildBuilderDelegate((context, index) {
-      return Container(
-        margin: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).size.height * 0.005,
-            horizontal: MediaQuery.of(context).size.width * 0.03),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            //border: Border.all(color: Colors.black),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: shadowColor.withOpacity(0.1),
-                blurRadius: 1,
-                spreadRadius: 1,
-                offset: Offset(1, 1),
-              )
-            ]),
-        padding: EdgeInsets.only(top: 3, left: 3, right: 3),
-        width: MediaQuery.of(context).size.width * 0.6,
-        height: MediaQuery.of(context).size.width * 0.75,
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.width * 0.454,
-              child: CachedNetworkImage(
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.cover)),
-                ),
-                imageUrl: courses[0]["image"],
-              ),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.width*0.4,
-              right: MediaQuery.of(context).size.width*0.03,
-              child: Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: shadowColor.withOpacity(.1),
-                      blurRadius: .1,
-                      spreadRadius: .1,
-                      offset: Offset(0, 0),
-                    )
-                  ],
-                ),
-                child: SvgPicture.asset(
-                  "assets/icons/bookmark.svg",
-                  color: primary.withOpacity(.5),
-                  height: MediaQuery.of(context).size.height*0.035,
-                ),
-              ),
-            ),
-            Positioned(
-              left: 15,
-                top: MediaQuery.of(context).size.width*0.48,
-                child:
-            Column(
-
-             children: [
-                Text(courses[0]["name"],style: TextStyle(fontSize:20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),)
-              ],
-            ))
-          ],
+    return SliverChildBuilderDelegate(
+            (context, index) {
+      return Padding(
+        padding: EdgeInsets.only(top: 10, left: 15, right: 15),
+        child: CourseItem(
+          data: courses[index], onBookMark: () {
+            setState(() {
+              courses[index]["is_favorited"]=!courses[index]["is_favorited"];
+            });
+        },
         ),
       );
-    });
+    },
+      childCount: courses.length,
+    );
+  }
+
+  getAttributes(icon, name, color) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 18,
+          color: color,
+        ),
+        SizedBox(width: 5),
+        Text(
+          name,
+          style: TextStyle(fontSize: 13, color: labelColor),
+        ),
+      ],
+    );
   }
 
   getSearchBox() {
@@ -181,21 +138,24 @@ class _ExplorePageState extends State<ExplorePage> {
 
   getCategories() {
     return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.only(right: 15, top: 10, bottom: 5),
-        child: Row(
-            children: List.generate(
-                categories.length,
-                (index) => CategoryItem(
-                      name: categories[index]["name"],
-                      path: categories[index]["icon"],
-                      isActive: index == selectedCategoryIndex,
-                      onTap: () {
-                        setState(() {
-                          selectedCategoryIndex = index;
-                        });
-                      },
-                    ))));
+      scrollDirection: Axis.horizontal,
+      padding: EdgeInsets.only(right: 15, top: 10, bottom: 5),
+      child: Row(
+        children: List.generate(
+          categories.length,
+          (index) => CategoryItem(
+            name: categories[index]["name"],
+            path: categories[index]["icon"],
+            isActive: index == selectedCategoryIndex,
+            onTap: () {
+              setState(() {
+                selectedCategoryIndex = index;
+              });
+            },
+          ),
+        ),
+      ),
+    );
   }
 
   changeActiveIndex(index) {
