@@ -163,6 +163,7 @@ class _HomePageState extends State<HomePage> {
                           CourseDetailApp(data: {"course": features[index]})));
                 },
                 data: features[index])));
+    //hello
   }
 
   getRecommend() {
