@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:online_course/screens/progress.dart';
+import 'package:online_course/screens/watch_course.dart';
 import './screens/root_app.dart';
 import './theme/color.dart';
 void main() {
@@ -17,6 +19,11 @@ class MyApp extends StatelessWidget {
         primaryColor: primary,
       ),
       home: const RootApp(),
+      routes: {
+        "/watch": (context)=> WatchCourse(),
+        "/progress":(context)=>Progress(),
+
+      },
     );
   }
 }

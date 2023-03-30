@@ -7,11 +7,11 @@ class BookMarkBox extends StatelessWidget {
   const BookMarkBox({
     Key? key,
     required this.onBookMark,
-    required this.data,
+     this.data=false,
   }) : super(key: key);
 
   final GestureTapCallback onBookMark;
-  final data;
+  final bool data;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class BookMarkBox extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
-            color: data["is_favorited"]?primary:Colors.white,
+            color: data?primary:Colors.white,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
@@ -36,7 +36,7 @@ class BookMarkBox extends StatelessWidget {
           ),
           child: SvgPicture.asset(
             "assets/icons/bookmark.svg",
-            color: data["is_favorited"]?Colors.white:primary.withOpacity(.5),
+            color: data?Colors.white:primary.withOpacity(.5),
             height: MediaQuery.of(context).size.height * 0.035,
           ),
         ),

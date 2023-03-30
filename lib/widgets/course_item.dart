@@ -50,7 +50,7 @@ class CourseItem extends StatelessWidget {
           Positioned(
             top: MediaQuery.of(context).size.width * 0.4,
             right: MediaQuery.of(context).size.width * 0.03,
-            child: BookMarkBox(onBookMark: onBookMark, data: data),
+            child: BookMarkBox(onBookMark: onBookMark, data: data["is_favorited"]),
           ),
           Positioned(
 

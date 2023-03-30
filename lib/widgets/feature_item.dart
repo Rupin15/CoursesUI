@@ -34,9 +34,12 @@ class FeatureItem extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              CustomImage(data["image"],
-                width: double.infinity, height: 190,
-                radius: 15,
+              Hero(
+                tag:data["id"].toString()+data["image"],
+                child: CustomImage(data["image"],
+                  width: double.infinity, height: 190,
+                  radius: 15,
+                ),
               ),
               Positioned(
                 top: 170, right: 15,
