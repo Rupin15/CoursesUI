@@ -1,10 +1,18 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:online_course/theme/color.dart';
 
 class BottomBarItem extends StatelessWidget {
-  const BottomBarItem(this.icon, {this.onTap, this.color = Colors.grey, this.activeColor = primary, this.isActive = false, this.isNotified = false});
+  const BottomBarItem(
+    this.icon, {
+    Key? key,
+    this.onTap,
+    this.color = Colors.grey,
+    this.activeColor = primary,
+    this.isActive = false,
+    this.isNotified = false,
+  }) : super(key: key);
+
   final String icon;
   final Color color;
   final Color activeColor;
@@ -14,27 +22,40 @@ class BottomBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    // Calculate padding based on screen size
+    final padding = size.width * 0.02;
+
+    // Calculate icon size based on screen size
+    final iconSize = size.width * 0.06;
+
     return GestureDetector(
       onTap: onTap,
-      child: 
-      AnimatedContainer(
+      child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.fastOutSlowIn,
-        padding: EdgeInsets.all(7),
+        padding: EdgeInsets.all(padding),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(size.width * 0.1),
           color: bottomBarColor,
           boxShadow: [
-            if(isActive) BoxShadow(
-              color: shadowColor.withOpacity(0.1),
-              spreadRadius: 2,
-              blurRadius: 2,
-              offset: Offset(0, 0), // changes position of shadow
-            ),
+            if (isActive)
+              BoxShadow(
+                color: shadowColor.withOpacity(0.1),
+                spreadRadius: 2,
+                blurRadius: 2,
+                offset: Offset(0, 0), // changes position of shadow
+              ),
           ],
         ),
-        child: SvgPicture.asset(icon, color: isActive ? activeColor : color, width: 23, height: 23,),
+        child: SvgPicture.asset(
+          icon,
+          color: isActive ? activeColor : color,
+          width: iconSize,
+          height: iconSize,
+        ),
       ),
-    );  
+    );
   }
 }

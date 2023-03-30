@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'account.dart';
 import 'package:online_course/screens/chat.dart';
@@ -9,39 +8,39 @@ import './home.dart';
 import './explore.dart';
 
 class RootApp extends StatefulWidget {
-  const RootApp({ Key? key }) : super(key: key);
+  const RootApp({Key? key}) : super(key: key);
 
   @override
   _RootAppState createState() => _RootAppState();
 }
 
-class _RootAppState extends State<RootApp>  with TickerProviderStateMixin{
+class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
   int activeTab = 0;
   List barItems = [
     {
-      "icon" : "assets/icons/home.svg",
-      "active_icon" : "assets/icons/home.svg",
-      "page" : HomePage(),
+      "icon": "assets/icons/home.svg",
+      "active_icon": "assets/icons/home.svg",
+      "page": HomePage(),
     },
     {
-      "icon" : "assets/icons/search.svg",
-      "active_icon" : "assets/icons/search.svg",
-      "page" : ExplorePage(),
+      "icon": "assets/icons/search.svg",
+      "active_icon": "assets/icons/search.svg",
+      "page": ExplorePage(),
     },
     {
-      "icon" : "assets/icons/play.svg",
-      "active_icon" : "assets/icons/play.svg",
-      "page" : Container(),
+      "icon": "assets/icons/play.svg",
+      "active_icon": "assets/icons/play.svg",
+      "page": Container(),
     },
     {
-      "icon" : "assets/icons/chat.svg",
-      "active_icon" : "assets/icons/chat.svg",
-      "page" : ChatPage(),
+      "icon": "assets/icons/chat.svg",
+      "active_icon": "assets/icons/chat.svg",
+      "page": ChatPage(),
     },
     {
-      "icon" : "assets/icons/profile.svg",
-      "active_icon" : "assets/icons/profile.svg",
-      "page" : AccountPage(),
+      "icon": "assets/icons/profile.svg",
+      "active_icon": "assets/icons/profile.svg",
+      "page": AccountPage(),
     },
   ];
 
@@ -58,7 +57,7 @@ class _RootAppState extends State<RootApp>  with TickerProviderStateMixin{
   @override
   void initState() {
     super.initState();
-     _controller.forward();
+    _controller.forward();
   }
 
   @override
@@ -68,11 +67,8 @@ class _RootAppState extends State<RootApp>  with TickerProviderStateMixin{
     super.dispose();
   }
 
-  animatedPage(page){
-    return FadeTransition(
-      child: page,
-      opacity: _animation
-    );
+  animatedPage(page) {
+    return FadeTransition(child: page, opacity: _animation);
   }
 
   void onPageChanged(int index) {
@@ -87,57 +83,62 @@ class _RootAppState extends State<RootApp>  with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: appBgColor,
-      bottomNavigationBar: getBottomBar(),
-      body: getBarPage()
-    );
+        backgroundColor: appBgColor,
+        bottomNavigationBar: getBottomBar(size),
+        body: getBarPage());
   }
 
-  Widget getBarPage(){
-    return 
-      IndexedStack(
+  Widget getBarPage() {
+    return IndexedStack(
         index: activeTab,
-        children: 
-          List.generate(barItems.length, 
-            (index) => animatedPage(barItems[index]["page"])
-          )
-      );
+        children: List.generate(
+            barItems.length, (index) => animatedPage(barItems[index]["page"])));
   }
 
-  Widget getBottomBar() {
+  Widget getBottomBar(Size size) {
+    final double height = size.height * 0.09;
+    final double horizontalPadding = size.width * 0.05;
+
     return Container(
-      height: 75,
+      height: height,
       width: double.infinity,
       decoration: BoxDecoration(
         color: bottomBarColor,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(25), 
-          topRight: Radius.circular(25)
-        ), 
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ),
         boxShadow: [
           BoxShadow(
             color: shadowColor.withOpacity(0.1),
             blurRadius: 1,
             spreadRadius: 1,
-            offset: Offset(1, 1)
-          )
-        ]
+            offset: Offset(1, 1),
+          ),
+        ],
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 25, right: 25, bottom: 15,),
+        padding: EdgeInsets.symmetric(
+          horizontal: horizontalPadding,
+          vertical: height * 0.2,
+        ),
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(barItems.length, 
-            (index) => BottomBarItem(barItems[index]["icon"], isActive: activeTab == index, activeColor: primary,
-              onTap: (){
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(
+            barItems.length,
+            (index) => BottomBarItem(
+              barItems[index]["icon"],
+              isActive: activeTab == index,
+              activeColor: primary,
+              onTap: () {
                 onPageChanged(index);
               },
-            )
-          )
-        )
+            ),
+          ),
+        ),
       ),
     );
   }
-
 }

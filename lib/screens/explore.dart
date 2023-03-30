@@ -50,18 +50,20 @@ class _ExplorePageState extends State<ExplorePage> {
 
   getCourses() {
     return SliverChildBuilderDelegate(
-            (context, index) {
-      return Padding(
-        padding: EdgeInsets.only(top: 10, left: 15, right: 15),
-        child: CourseItem(
-          data: courses[index], onBookMark: () {
-            setState(() {
-              courses[index]["is_favorited"]=!courses[index]["is_favorited"];
-            });
-        },
-        ),
-      );
-    },
+      (context, index) {
+        return Padding(
+          padding: EdgeInsets.only(top: 10, left: 15, right: 15),
+          child: CourseItem(
+            data: courses[index],
+            onBookMark: () {
+              setState(() {
+                courses[index]["is_favorited"] =
+                    !courses[index]["is_favorited"];
+              });
+            },
+          ),
+        );
+      },
       childCount: courses.length,
     );
   }

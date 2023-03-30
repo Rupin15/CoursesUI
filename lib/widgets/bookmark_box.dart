@@ -23,7 +23,7 @@ class BookMarkBox extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
-            color: data["is_favorited"]?primary:Colors.white,
+            color: data["is_favorited"] ? primary : Colors.white,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
@@ -36,7 +36,8 @@ class BookMarkBox extends StatelessWidget {
           ),
           child: SvgPicture.asset(
             "assets/icons/bookmark.svg",
-            color: data["is_favorited"]?Colors.white:primary.withOpacity(.5),
+            color:
+                data["is_favorited"] ? Colors.white : primary.withOpacity(.5),
             height: MediaQuery.of(context).size.height * 0.035,
           ),
         ),
