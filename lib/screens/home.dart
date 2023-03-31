@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:online_course/screens/course_detail.dart';
 import 'package:online_course/theme/color.dart';
 import 'package:online_course/utils/data.dart';
 import 'package:online_course/widgets/category_box.dart';
@@ -21,28 +22,27 @@ class _HomePageState extends State<HomePage> {
     final double appBarHeight = 50;
 
     return Scaffold(
-      backgroundColor: appBgColor,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: appBarColor,
-            pinned: true,
-            snap: true,
-            floating: true,
-            title: getAppBar(),
-            expandedHeight: size.height * 0.06 > appBarHeight
-                ? size.height * 0.06
-                : appBarHeight,
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => buildBody(size),
-              childCount: 1,
+        backgroundColor: appBgColor,
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: appBarColor,
+              pinned: true,
+              snap: true,
+              floating: true,
+              title: getAppBar(),
+              expandedHeight: size.height * 0.06 > appBarHeight
+                  ? size.height * 0.06
+                  : appBarHeight,
             ),
-          )
-        ],
-      ),
-    );
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => buildBody(size),
+                childCount: 1,
+              ),
+            )
+          ],
+        ));
   }
 
   Widget getAppBar() {
@@ -65,14 +65,12 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 5,
               ),
-              Text(
-                "Good Morning!",
-                style: TextStyle(
-                  color: textColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
-                ),
-              ),
+              Text("Good Morning!",
+                  style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                  )),
             ],
           )),
           NotificationBox(
@@ -168,7 +166,19 @@ class _HomePageState extends State<HomePage> {
       ),
       items: List.generate(
         features.length,
-        (index) => FeatureItem(onTap: () {}, data: features[index]),
+        (index) => FeatureItem(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => CourseDetailApp(
+                    data: {
+                      "course": features[index],
+                    },
+                  ),
+                ),
+              );
+            },
+            data: features[index]),
       ),
     );
   }

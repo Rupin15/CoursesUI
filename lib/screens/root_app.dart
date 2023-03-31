@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_course/screens/progress.dart';
 import 'account.dart';
 import 'package:online_course/screens/chat.dart';
 import 'package:online_course/theme/color.dart';
@@ -30,7 +31,7 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
     {
       "icon": "assets/icons/play.svg",
       "active_icon": "assets/icons/play.svg",
-      "page": Container(),
+      "page": Progress(),
     },
     {
       "icon": "assets/icons/chat.svg",

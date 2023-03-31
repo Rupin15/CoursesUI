@@ -1,7 +1,7 @@
 var profile = {
-  "name" : "Sangvaleap",
-  "image" : "https://avatars.githubusercontent.com/u/86506519?v=4",
-  "email" : "sangvaleap.vanny@gmail.com"
+  "name" : "Rupin Malik",
+  "image" : "https://images.unsplash.com/photo-1596638787647-904d822d751e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTF8fGZhc2hpb258ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
+  "email" : "rupinmalik@gmail.com"
 };
 
 List categories = [
